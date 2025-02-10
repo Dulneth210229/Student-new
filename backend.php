@@ -72,6 +72,42 @@
         }
 
         //Function for update student
+        public function updateStudent($id, $name, $birth, $gender, $resume){
+
+            $birthDate = new Datetime($birth);
+            $today = new DateTime();
+            $age = $today->diff($birthDate)->y;
+
+            $filePath = null;
+            if($resume['error' === UPLOAD_ERR_OK]){
+                $uploadDir = 'uploads/';
+                if(!is_dir($uploadDir)){
+                    mkdir($uploadDir, 0777, true); //making the directory if not exist and give read and write permission
+                }
+
+                $fileName = uniqid() . '_' . basename($resume['name']);
+                $filePath = $uploadDir . $fileName;
+
+                if(!move_uploaded_file($resume['tmp_name'], $filePath)){
+                    return "Error Uploading Resume";
+                }
+            }
+            if($filePath){
+                $sql = "UPDATE student SET name = ?, birth = ?, age =?, gender = ?, resume = ? WHERE id = ?";
+                $stmt = $this->db->prepare($sql);
+                $stmt->bind_param("ssissi", $name, $birth, $age, $gender, $filePath, $id);
+            }else{
+                $sql = "UPDATE student SET name = ?, birth = ?, age = ?, gender = ? WHERE id = ?";
+                $stmt = $this->db->prepare($sql);
+                $stmt->bind_param("ssisi", $name, $birth, $age, $gender, $id);   
+            }
+            if ($stmt->execute()){
+                return "Student Updated Successfully";
+            }else{
+                return "Error updating student" . $stmt->error;
+            }
+
+        }
 
         //Function for delete student
     }
