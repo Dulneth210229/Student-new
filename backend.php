@@ -44,11 +44,32 @@
         public function fetchStudents(){
 
             $sql = "SELECT * FROM student";
+            $result = $this->db->query($sql);
 
-            
+            if($result){
+                $student = $result->fetch_all(MYSQLI_ASSOC);
+                return json_encode($student);
+            }else{
+                return json_encode(["Error" => "Error Fetching Students"]);
+            }
+
+
         }
 
-        //Function for fetch a single student by ID
+         //Function for fetch a single student by ID
+        public function fetchStudentById($id){
+            $sql = "SELECT * FROM students WHERE id = ?";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if($result->num_rows > 0){
+                return json_encode($result->fetch_assoc());
+            }else{
+                return json_encode(["error" => "Student not found"]);
+            }
+        }
 
         //Function for update student
 
