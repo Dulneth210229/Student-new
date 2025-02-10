@@ -110,5 +110,16 @@
         }
 
         //Function for delete student
+        public function deleteStudent($id){
+            $sql = "DELETE FROM student WHERE id = ?";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bind_param("i", $id);
+
+            if($stmt->execute()){
+                return "Student deleted successfully";
+            }else{
+                return "Error deleting student : " . $stmt->error;
+            }
+        }
     }
 ?>
