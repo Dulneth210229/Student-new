@@ -1,5 +1,6 @@
 <?php
     require_once 'config.php';
+    // header('Content-Type: application/json');
 
     class Student{
         
@@ -58,7 +59,7 @@
 
          //Function for fetch a single student by ID
         public function fetchStudentById($id){
-            $sql = "SELECT * FROM students WHERE id = ?";
+            $sql = "SELECT * FROM student WHERE id = ?";
             $stmt = $this->db->prepare($sql);
             $stmt->bind_param("i", $id);
             $stmt->execute();
@@ -79,7 +80,7 @@
             $age = $today->diff($birthDate)->y;
 
             $filePath = null;
-            if($resume['error' === UPLOAD_ERR_OK]){
+            if($resume['error'] === UPLOAD_ERR_OK){
                 $uploadDir = 'uploads/';
                 if(!is_dir($uploadDir)){
                     mkdir($uploadDir, 0777, true); //making the directory if not exist and give read and write permission

@@ -1,6 +1,8 @@
 <?php
     require_once 'student.php';
 
+    // header('Content-Type: application/json');
+
     $student = new Student();
 
     if(isset($_GET['action'])){
@@ -13,7 +15,7 @@
                 echo $student->fetchStudents();
                 break;
             case 'fetchById':
-                echo $student->fetchStudentById($_POST['id']);
+                echo $student->fetchStudentById($_GET['id']);
                 break;
             case 'update': 
                 echo $student->updateStudent($_POST['id'], $_POST['name'], $_POST['birth'], $_POST['gender'], $_FILES['resume']);

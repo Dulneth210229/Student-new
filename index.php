@@ -223,10 +223,11 @@
                 method : 'GET',
                 data : {id : studentID},
                 success: function(response){
-                    $('#updateId').val(response.id);
-                    $('#updateName').val(response.name);
-                    $('#updateBirth').val(response.birth);
-                    $('#updateGender').val(response.gender);
+                    let student = JSON.parse(response);
+                    $('#updateId').val(student.id);
+                    $('#updateName').val(student.name);
+                    $('#updateBirth').val(student.birth);
+                    $('#updateGender').val(student.gender);
                     // $('#updateResume').val(response.resume);
                     $('#studentForm').hide();
                     $('#studentUpdateForm').show();
@@ -251,12 +252,10 @@
                 processData: false,
                 contentType: false,
                 success: function(response){
-
                     alert(response);
                     dataTable.ajax.reload();
                     $('#studentForm').show();
                     $('#studentUpdateForm').hide();
-
 
                 },
                 
