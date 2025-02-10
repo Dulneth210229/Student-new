@@ -12,6 +12,7 @@
         {
             try{
                 $this->conn = new mysqli($this->server, $this->user, $this->password, $this->name, $this->port);
+              
                 if($this->conn->connect_error){
                     throw new Exception("Database connection failed: " . $this->conn->connect_error);
                 }
