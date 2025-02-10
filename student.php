@@ -26,7 +26,7 @@
             $filePath = $uploadDir . $fileName;
 
             if(move_uploaded_file($resume['tmp_name'], $filePath)){
-                $sql = "INSERT INTO student (nam, birth, age, gender, resume) VALUES (?, ?, ?, ?, ?)";
+                $sql = "INSERT INTO student (name, birth, age, gender, resume) VALUES (?, ?, ?, ?, ?)";
                 $stmt = $this->db->prepare($sql);
                 $stmt->bind_param("ssiss", $name, $birth, $age, $gender, $filePath);
 
